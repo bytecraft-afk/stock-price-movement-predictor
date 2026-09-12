@@ -1,0 +1,19 @@
+# Stock Price Movement Predictor — Python dependencies
+# Install with: pip install -r requirements.txt
+#
+# Pinned to exact versions for full reproducibility.
+#
+# NOTE on numpy + ta compatibility:
+#   The `ta` library (0.11.0) is incompatible with NumPy 2.x.
+#   However, this project DOES NOT import `ta` — all indicators are
+#   hand-computed in pandas.  We therefore use numpy 2.x (the only
+#   version that ships pre-built wheels for Python 3.13 on Windows).
+#   `ta` is listed here for reference but NOT installed automatically.
+#   If you need ta on Python <=3.11 with numpy 1.26.x, uncomment it.
+
+numpy==2.2.3
+pandas==2.2.3
+scikit-learn==1.5.2
+matplotlib==3.9.2
+yfinance==0.2.54
+# ta==0.11.0   # incompatible with numpy 2.x; not used (hand-computed indicators)
