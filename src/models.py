@@ -13,7 +13,7 @@ on the TEST set.  Training-set accuracy is also printed to flag overfitting.
 
 Random seed (RANDOM_SEED = 42) is set on every model for reproducibility.
 """
-
+import pandas as pd
 import numpy as np
 from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier
