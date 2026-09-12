@@ -1,0 +1,7 @@
+Model,Accuracy,Precision,Recall,F1
+Baseline 1 — Persistence,0.547,0.6243,0.6278,0.626
+Baseline 2 — Majority Class,0.604,0.604,1.0,0.7531
+Raw + LogisticRegression,0.4128,0.6667,0.0556,0.1026
+Raw + RandomForest,0.4195,0.6842,0.0722,0.1307
+Engineered + LogisticRegression,0.604,0.614,0.9278,0.7389
+Engineered + RandomForest,0.5638,0.5992,0.8389,0.6991
