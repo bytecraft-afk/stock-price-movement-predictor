@@ -192,7 +192,26 @@ Fitting the scaler on test data would reveal its distribution to the model — a
 > Run `python main.py` to reproduce. Results below reflect SPY 2019–2024 with seed 42.
 
 ```
-(results_table.csv contents appear here after running main.py)
+### Results
+
+| Model | Accuracy | Precision | Recall | F1 |
+|---|---:|---:|---:|---:|
+| Baseline 1 — Persistence | 54.70% | 62.43% | 62.78% | 62.60% |
+| Baseline 2 — Majority Class | 60.40% | 60.40% | 100.00% | 75.31% |
+| Raw + Logistic Regression | 41.28% | 66.67% | 5.56% | 10.26% |
+| Raw + Random Forest | 41.95% | 68.42% | 7.22% | 13.07% |
+| Engineered + Logistic Regression | 60.40% | 61.40% | 92.78% | 73.89% |
+| Engineered + Random Forest | 56.38% | 59.92% | 83.89% | 69.91% |
+
+### Interpretation
+
+The engineered Logistic Regression achieved 60.40% accuracy, which exactly matches the majority-class baseline. The engineered Random Forest achieved 56.38%, which was below the majority baseline.
+
+Therefore, the engineered features did not demonstrate a meaningful predictive advantage over the naive baselines on the held-out test period. This is an honest and expected outcome for next-day stock direction prediction, which is a difficult problem and can behave close to a coin flip.
+
+The raw-price models performed substantially worse than the baselines, with both models predicting very few UP days.
+
+Training and test performance were also compared to check for overfitting. The Random Forest models had higher training accuracy than test accuracy, indicating some degree of overfitting, while the constrained tree depth and minimum leaf size helped limit it.
 ```
 
 ---

@@ -44,34 +44,38 @@ def build_labels(df: pd.DataFrame) -> pd.DataFrame:
     """
     Attach the next-day direction label to every row.
 
-    Formula:  target[t] = 1 if close[t+1] > close[t] else 0
+    Formula: target[t] = 1 if close[t+1] > close[t] else 0
 
-    Implementation detail
-    ---------------------
-    .shift(-1) moves each value UP by one position — so the value that
-    was in row t+1 now sits in row t.  Comparing this shifted series to
-    the current Close gives us "did price rise the NEXT day?"
+    .shift(-1) moves tomorrow's Close into today's row.
+    The final row has no next-day Close, so its label is removed.
 
-    The very last row has no row t+1 in the dataset, so shift(-1) yields
-    NaN there.  We drop it immediately so no model ever sees an invalid label.
-
-    NO LEAKAGE: the label is only used as the *output* (y), never as an
-    input feature.  Models are trained to predict it — they do not receive
-    it as an input column.
+    NO LEAKAGE: the target is only an output, never an input feature.
     """
     df = df.copy()
 
     # shift(-1): tomorrow's close slides into today's row
-    next_close = df["Close"].shift(-1)          # next_close[t] = close[t+1]
+    next_close = df["Close"].shift(-1)
 
-    # Binary label: 1 = price went UP next day, 0 = flat or down
-    df["target"] = (next_close > df["Close"]).astype(int)
+    # target[t] = 1 if close[t+1] > close[t] else 0
+    # Keep the final value as NaN because there is no next-day close.
+    target = (next_close > df["Close"]).where(next_close.notna())
 
     n_before = len(df)
-    df.dropna(subset=["target"], inplace=True)  # removes final row(s)
+
+    # Drop the final row because it has no valid future label.
+    df["target"] = target
+    df.dropna(subset=["target"], inplace=True)
+
+    # Convert valid labels to 0/1.
+    df["target"] = df["target"].astype(int)
+
     n_dropped = n_before - len(df)
-    print(f"[features] Label construction: dropped {n_dropped} trailing row(s) "
-          f"(no future close available).")
+
+    print(
+        f"[features] Label construction: dropped {n_dropped} trailing row(s) "
+        f"(no future close available)."
+    )
+
     return df
 
 
