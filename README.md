@@ -4,6 +4,8 @@ A machine learning project that predicts the **next-day price direction (up/down
 
 ---
 
+##Video link- https://drive.google.com/file/d/1uQlBnHpV1KUGkKJ90DFo_eY7h9xJmkHP/view?usp=drivesdk
+
 ## Table of Contents
 1. [Project Overview](#project-overview)
 2. [How to Run](#how-to-run)
